@@ -1,16 +1,33 @@
-<section class="hero is-primary">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">Simplus</h1>
-      <h2 class="subtitle">Cadastro de produtos</h2>
-    </div>
-  </div>
-</section>
+<sp-hero title="Simplus" subtitle="Cadastro de produtos"></sp-hero>
 <section class="section">
-  <nav class="panel">
-    <p class="panel-heading has-text-weight-semibold">Cadastro</p>
+  <ng-include ng-if="showModal" src="'app/products/modal/modal.html'"></ng-include>
+  <nav class="panel" ng-repeat="composition in compositions">
+    <p class="panel-heading has-text-weight-semibold">{{ composition.title }}</p>
     <div class="panel-block">
-      
+      <table class="table is-striped is-hoverable is-narrow is-fullwidth">
+        <thead>
+          <tr>
+            <th>DUN</th>
+            <th>Unidade da Embalagem</th>
+            <th>Ações</th>
+          </tr>
+          <tbody>
+            <tr ng-repeat="item in composition.flattedItems track by $index">
+              <td>
+                <div ng-style="{ 'margin-left': '{{item.level}}rem' }">
+                  {{ item.dun }}
+                </div>
+              </td>
+              <td>{{ item.pack }}</td>
+              <td>
+                <sp-button icon="fa-pencil" color="is-warning" on-click="onUpdate()"></sp-button>
+                <sp-button icon="fa-link" color="is-warning" on-click="onInsert()"></sp-button>
+                <sp-button icon="fa-trash" color="is-danger" on-click="onRemove()"></sp-button>
+              </td>
+            </tr>
+          </tbody>
+        </thead>
+      </table>
     </div>
   </nav>
 </section>

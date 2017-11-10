@@ -1,4 +1,7 @@
-angular.module('app.products', ['ngRoute'])
+angular.module('app.products', [
+  'ngRoute',
+  'app.products.modal',
+])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
@@ -7,11 +10,11 @@ angular.module('app.products', ['ngRoute'])
   })
 }])
 
-.controller('ProductController', [function() {
-  const self = this;
-
-  self.compositions = [{
+.controller('ProductController', function ($scope) {
+  $scope.showModal = false;
+  $scope.compositions = [{
     title: 'Composição logística 1',
+    flattedItems: [],
     items: [{
       dun: '111222333444555',
       pack: 'CAIXA',
@@ -31,10 +34,29 @@ angular.module('app.products', ['ngRoute'])
     }],
   }, {
     title: 'Composição logística 2',
+    flattedItems: [],
     items: [
       { dun: '111222333444555', pack: 'CAIXA', amount: 1 },
       { dun: '12345678', pack: 'PACK', amount: 1 },
       { dun: '789607130086', pack: 'UNIDADE', amount: 1 },
     ]
   }];
-}]);
+
+  const flatten = (items, level) => items.reduce((prev, cur) => {
+    const item = prev.concat({ ...cur, level });
+    return cur.children ? [...prev, ...item, ...flatten(cur.children, level + 1)] : item;
+  }, []);
+
+  $scope.compositions.forEach(composition => {
+    composition.flattedItems = flatten(composition.items, 0);
+  });
+
+  $scope.getActions = (row) => {
+    const defaultActions = ['insert', 'edit'];
+    return row.children ? [...defaultActions, 'remove'] : defaultActions;
+  };
+
+  $scope.onUpdate = () => {
+    $scope.showModal = true;
+  };
+});

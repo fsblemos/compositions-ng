@@ -1,0 +1,16 @@
+<div ng-controller="ProductModalController" class="modal is-primary is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Dados logísticos</p>
+      <button class="delete" aria-label="close" on-click="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <sp-input ng-repeat="measure in measures" title="{{ measure.title }}"></sp-input>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button">Cancelar</button>
+      <button class="button is-success">Salvar</button>
+    </footer>
+  </div>
+</div>

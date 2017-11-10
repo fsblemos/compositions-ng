@@ -6,18 +6,6 @@ var gulp            = require('gulp'),
     runSequence     = require('run-sequence');
 
 
-// optimize images
-gulp.task('images', function() {
-  return gulp.src('./images/**/*')
-    .pipe($.changed('./_build/images'))
-    .pipe($.imagemin({
-      optimizationLevel: 3,
-      progressive: true,
-      interlaced: true
-    }))
-    .pipe(gulp.dest('./_build/images'));
-});
-
 // browser-sync task, only cares about compiled CSS
 gulp.task('browser-sync', function() {
   browserSync({
@@ -230,7 +218,6 @@ gulp.task('default', ['browser-sync', 'sass', 'minify-css'], function() {
  * build task:
  * 1. clean /_build folder
  * 2. compile SASS files, minify and uncss compiled css
- * 3. copy and minimize images
  * 4. minify and copy all HTML files into $templateCache
  * 5. build index.html
  * 6. minify and copy all JS files
@@ -242,7 +229,6 @@ gulp.task('build', function(callback) {
   runSequence(
     'clean:build',
     'sass:build',
-    'images',
     'templates',
     'usemin',
     'fonts',

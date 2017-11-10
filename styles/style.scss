@@ -1,0 +1,61 @@
+@import 'node_modules/bulma/sass/utilities/initial-variables.sass';
+
+$primary: #c0392b;
+$warning: #fbc02d;
+$danger: #e53935;
+$success: #0d8c3a;
+
+$primary-invert: $white;
+$body-background-color: #f2f2f2;
+
+@import 'node_modules/bulma/sass/utilities/derived-variables.sass';
+
+@each $name, $pair in $colors {
+  $color: nth($pair, 1);
+  $color-invert: nth($pair, 2);
+
+  &.is-#{$name} {
+    &.button {
+      background-color: $color;
+    }
+
+    &.hero {
+      background-color: $color;
+
+      .title {
+        color: $color-invert;
+      }
+    }
+
+    &.modal {
+      .modal-card-head {
+        background-color: $color;
+
+        .modal-card-title {
+          color: $color-invert;
+        }
+      }
+    }
+  }
+}
+
+.panel {
+  .panel-block {
+    background-color: $white;
+  }
+
+  .panel-heading {
+    background-color: $primary;
+    color: $primary-invert;
+  }
+}
+
+.modal-card-foot {
+  justify-content: flex-end;
+}
+
+// .field {
+//   &.is-horizontal {
+//     margin-bottom: .75rem;
+//   }
+// }
